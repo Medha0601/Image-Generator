@@ -1,0 +1,14 @@
+import Sidebar from "@/components/shared/Sidebar";
+import React from "react";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <main className="root">
+      {/* add sidebar and mobile navigation */}
+      <Sidebar />
+      <div className="root-container">
+        <div className="wrapper">{children}</div>
+      </div>
+    </main>
+  );
+}
