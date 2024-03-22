@@ -1,12 +1,14 @@
 "use client";
 
 import { navLinks } from "@/constants";
-import { SignedIn } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function Sidebar() {
+  console.log("sidebar")
   const pathname = usePathname();
 
   return (
@@ -25,6 +27,7 @@ export default function Sidebar() {
             <ul className="sidebar-nav_elements">
               {navLinks.map((link) => {
                 const isActive = link.route === pathname;
+                console.log(link.label)
                 return (
                   <li
                     key={link.route}
@@ -34,12 +37,31 @@ export default function Sidebar() {
                         : "text-gray-700"
                     }`}
                   >
-                    {link.label}
+                    {/* {link.label} */}
+                    <Link className="sidebar-link" href={link.route}>
+                      <Image
+                        src={link.icon}
+                        alt={link.label}
+                        width={24}
+                        height={24}
+                        className={`${isActive && "brightness-200"}`}
+                      />
+                      {link.label}
+                    </Link>
                   </li>
                 );
               })}
+
+              <li>
+                <UserButton  afterSignOutUrl="/" showName/>
+              </li>
             </ul>
           </SignedIn>
+          <SignedOut>
+            <Button asChild >
+              <Link href='/sign-in'>Login</Link>
+            </Button>
+          </SignedOut>
         </nav>
       </div>
     </aside>
