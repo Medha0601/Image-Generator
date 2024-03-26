@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 
 export default function Sidebar() {
-  console.log("sidebar")
+  console.log("sidebar");
   const pathname = usePathname();
 
   return (
@@ -25,9 +25,9 @@ export default function Sidebar() {
         <nav className="sidebar-nav">
           <SignedIn>
             <ul className="sidebar-nav_elements">
-              {navLinks.map((link) => {
+              {navLinks.slice(0, 6).map((link) => {
                 const isActive = link.route === pathname;
-                console.log(link.label)
+                console.log(link.label);
                 return (
                   <li
                     key={link.route}
@@ -51,15 +51,42 @@ export default function Sidebar() {
                   </li>
                 );
               })}
-
-              <li>
-                <UserButton  afterSignOutUrl="/" showName/>
+            </ul>
+            <ul>
+              {navLinks.slice(6).map((link) => {
+                const isActive = link.route === pathname;
+                console.log(link.label);
+                return (
+                  <li
+                    key={link.route}
+                    className={`sidebar-nav_element group ${
+                      isActive
+                        ? "bg-purple-gradient text-white"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {/* {link.label} */}
+                    <Link className="sidebar-link" href={link.route}>
+                      <Image
+                        src={link.icon}
+                        alt={link.label}
+                        width={24}
+                        height={24}
+                        className={`${isActive && "brightness-200"}`}
+                      />
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="flex-center cursor-pointer gap-2 p-4">
+                <UserButton afterSignOutUrl="/" showName />
               </li>
             </ul>
           </SignedIn>
           <SignedOut>
-            <Button asChild >
-              <Link href='/sign-in'>Login</Link>
+            <Button asChild>
+              <Link href="/sign-in">Login</Link>
             </Button>
           </SignedOut>
         </nav>

@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <p>home</p>
       {/* <Sidebar /> */}
-      <UserButton afterSignOutUrl="/"  showName/>
+      {/* <UserButton afterSignOutUrl="/"  showName/> */}
     </div>
   );
 }
